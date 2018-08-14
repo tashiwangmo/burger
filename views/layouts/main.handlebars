@@ -1,28 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>BurgerMe!</title>
-    <!-- Latest compiled and minified CSS & JS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/burger_style.css">
-   
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Crafty+Girls|Fontdiner+Swanky" rel="stylesheet">
+
+	<!-- Compiled and minified Materialize CSS -->
+    
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+	<link rel="stylesheet" href="burger_style.css" type="text/css" />
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+	<title>Burger Menu</title>
 </head>
 
 <body>
-    <div class="jumbotron jumbotron-billboard" id="jumbotron1">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1 id="eatburger"> Burger Paradise!</h1>!</h1>
-                    <img class="burger" src="#"></img>
-                    <i class="fas fa-hands"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{{body}}}
-</body>
+	<img src="cute_burger.jpeg" width="400px" id="cute_burger">
 
+	{{{ body }}}
+
+</body>
 </html>
+
+{{!-- Javascript seems to not work :( at the last minute. I can't find my mistake but the javascript has been written in code.) --}}
+<script type="text/javascript">
+
+    $("#addburger").on("submit", function (event) {
+        event.preventDefault();
+        var newBurger = {
+            burger_name: $("#name").val().trim(),
+            devoured: false
+        };
+        $.ajax("/api/burgers", {
+            type: "POST",
+            data: newBurger
+        }).then(
+            function () {
+                console.log("created new burger!!");
+                location.reload();
+            }
+        );
+    });
+    $(".burgerAvailable").on("click", function (event) {
+        event.preventDefault();
+        var id = $(event.target).attr('data-burgerid');
+        var updatedBurger = {
+            devoured: true
+        };
+        $.ajax("/api/burgers/" + id, {
+            type: "PUT",
+            data: updatedBurger
+        }).then(
+            function () {
+                console.log("updated id ", id);
+                location.reload();
+            }
+        );
+    })
+</script>
