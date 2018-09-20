@@ -57,4 +57,19 @@
             }
         );
     })
+
+     $(".burgerEaten").on("click", function (event) {
+        event.preventDefault();
+        var id = $(event.target).attr('data-burgerid');
+        console.log(id)
+        $.ajax("/api/burgers/" + id, {
+            type: "DELETE",
+    
+        }).then(
+            function () {
+                console.log("updated id ", id);
+                location.reload();
+            }
+        );
+    })
 </script>

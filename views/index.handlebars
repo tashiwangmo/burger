@@ -27,10 +27,11 @@
             <div class="col s6">
                 <h2>Already Eaten!</h2>
                 {{#each burgers}} {{#if this.devoured}}
-                <div class='burgerEaten'>
-                    <div>
+                <div >
+                    <form action="/burgers/{{this.id}}?_method=Delete" method="DELETE">
+                        <button type="submit" class='burgerEaten' data-burgerid="{{this.id}}">
                         {{this.burger_name}}
-                    </div>
+                    </button>
                 </div>
                 {{/if}} {{/each}}
             </div>
